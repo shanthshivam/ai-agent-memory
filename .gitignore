@@ -1,0 +1,53 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+.env
+*.egg-info/
+dist/
+build/
+nul
+# Logs
+logs/*.log
+*.log
+
+# ChromaDB
+.chromadb/
+visualizations/*.md
+!visualizations/.gitkeep
+
+# Config
+*.local.yaml
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*.sublime-*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Daemon
+daemon.pid
+.session-reminder
+
+# Test
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Local memory storage (each project has its own)
+.agent-memory/
+
+# Local agent settings (not shared)
+.claude/settings.local.json

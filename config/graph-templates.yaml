@@ -1,0 +1,137 @@
+# Graph Node and Edge Templates
+# Use these as reference when adding nodes/edges
+
+node_types:
+  api:
+    description: "REST/GraphQL API endpoint"
+    example_id: "api-create-invoice"
+    example_name: "POST /api/invoices/create"
+    common_properties:
+      - auth: "required|optional|public"
+      - version: "v1|v2"
+      - method: "GET|POST|PUT|DELETE"
+
+  screen:
+    description: "UI screen or page"
+    example_id: "screen-invoice-form"
+    example_name: "Invoice Creation Form"
+    common_properties:
+      - route: "/invoices/new"
+      - auth_required: true
+
+  journey:
+    description: "User journey or workflow"
+    example_id: "journey-invoice-creation"
+    example_name: "Invoice Creation Journey"
+    common_properties:
+      - steps: 5
+      - user_type: "admin|user|guest"
+
+  component:
+    description: "Reusable UI component"
+    example_id: "component-data-table"
+    example_name: "DataTable Component"
+    common_properties:
+      - library: "react|vue|angular"
+
+  service:
+    description: "Backend service or microservice"
+    example_id: "service-billing"
+    example_name: "Billing Service"
+    common_properties:
+      - port: 8080
+      - protocol: "http|grpc"
+
+  database:
+    description: "Database or data store"
+    example_id: "db-invoices"
+    example_name: "Invoices Database"
+    common_properties:
+      - type: "postgres|mysql|mongodb"
+      - schema: "billing"
+
+  queue:
+    description: "Message queue or event bus"
+    example_id: "queue-invoice-events"
+    example_name: "Invoice Events Queue"
+    common_properties:
+      - type: "rabbitmq|kafka|sqs"
+
+edge_types:
+  calls:
+    description: "Direct synchronous call"
+    example: "screen-invoice-form --calls--> api-create-invoice"
+
+  uses:
+    description: "Uses/imports a component or utility"
+    example: "screen-invoice-form --uses--> component-data-table"
+
+  depends_on:
+    description: "Has a dependency on"
+    example: "service-billing --depends_on--> db-invoices"
+
+  part_of:
+    description: "Is part of a larger entity"
+    example: "api-create-invoice --part_of--> service-billing"
+
+  triggers:
+    description: "Triggers an async action"
+    example: "api-create-invoice --triggers--> queue-invoice-events"
+
+  reads:
+    description: "Reads data from"
+    example: "api-get-invoice --reads--> db-invoices"
+
+  writes:
+    description: "Writes data to"
+    example: "api-create-invoice --writes--> db-invoices"
+
+  emits:
+    description: "Emits events to"
+    example: "service-billing --emits--> queue-invoice-events"
+
+  consumes:
+    description: "Consumes events from"
+    example: "service-notifications --consumes--> queue-invoice-events"
+
+# Example workflow for mapping a feature
+example_workflow:
+  - step: 1
+    action: "Map the screen"
+    command: |
+      graph_add_node(
+        node_id="screen-invoice-form",
+        node_type="screen",
+        name="Invoice Creation Form",
+        properties={"route": "/invoices/new"}
+      )
+
+  - step: 2
+    action: "Map the API"
+    command: |
+      graph_add_node(
+        node_id="api-create-invoice",
+        node_type="api",
+        name="POST /api/invoices/create",
+        properties={"auth": "required", "method": "POST"}
+      )
+
+  - step: 3
+    action: "Map the database"
+    command: |
+      graph_add_node(
+        node_id="db-invoices",
+        node_type="database",
+        name="Invoices Table",
+        properties={"type": "postgres"}
+      )
+
+  - step: 4
+    action: "Connect with relationships"
+    commands:
+      - graph_add_edge(from_id="screen-invoice-form", to_id="api-create-invoice", relationship="calls")
+      - graph_add_edge(from_id="api-create-invoice", to_id="db-invoices", relationship="writes")
+
+  - step: 5
+    action: "Analyze impact"
+    command: graph_analyze_impact("api-create-invoice")

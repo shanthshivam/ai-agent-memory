@@ -1,0 +1,73 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "agent-memory-mcp"
+version = "1.0.0"
+description = "Unified memory system for AI Agents with ChromaDB, Tasks, and Architecture Graph"
+readme = "README.md"
+license = {text = "MIT"}
+authors = [
+    {name = "Zeronsec"}
+]
+requires-python = ">=3.10"
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+keywords = ["agent", "mcp", "memory", "chromadb", "ai", "llm"]
+
+dependencies = [
+    "mcp>=0.9.0",
+    "chromadb>=0.4.0",
+    "sentence-transformers>=2.0.0",
+    "python-dotenv>=1.0.0",
+    "pydantic>=2.0.0",
+    "networkx>=3.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-asyncio>=0.21.0",
+    "black>=23.0.0",
+    "ruff>=0.1.0",
+]
+viz = [
+    "matplotlib>=3.7.0",
+]
+
+[project.scripts]
+agent-memory-server = "src.server:run"
+
+[project.urls]
+Homepage = "https://github.com/zeronsec/ai-agent-memory"
+Repository = "https://github.com/zeronsec/ai-agent-memory"
+Issues = "https://github.com/zeronsec/ai-agent-memory/issues"
+
+[tool.setuptools]
+packages = ["src"]
+
+[tool.setuptools.package-data]
+src = ["*.yaml", "*.json", "*.md"]
+
+[tool.black]
+line-length = 100
+target-version = ['py310']
+
+[tool.ruff]
+line-length = 100
+select = ["E", "F", "W", "I"]
+ignore = ["E501"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
